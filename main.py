@@ -14,15 +14,38 @@ pygame.display.set_caption("C.Vacc")
 icon = pygame.image.load('logo.png')
 pygame.display.set_icon(icon)
 
+#Weapon
+
+injImg = pygame.image.load('inj.png')
+injX = 130
+injY = 450
+injX_change = 0
+
+def inj(X,Y):
+    screen.blit(injImg,(X,Y))
 
 #Game loop
 running = True
 while running:
+
+    screen.fill((0, 0, 0))
+
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
 
-    #screen.fill((255, 0, 0))
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_LEFT:
+                injX_change = -0.3
+            if event.key == pygame.K_RIGHT:
+                injX_change = 0.3
+        if event.type == pygame.KEYUP:
+            if event.key == pygame.K_LEFT or event.key == pygame.K_RIGHT:
+                injX_change = 0
+
+
     screen.blit(background, (0, 0))
+    injX += injX_change
+    inj(injX,injY)
     pygame.display.update()
 
