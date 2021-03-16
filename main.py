@@ -17,12 +17,22 @@ pygame.display.set_icon(icon)
 #Weapon
 
 injImg = pygame.image.load('inj.png')
-injX = 130
+injX = 140
 injY = 450
 injX_change = 0
 
+#virus
+
+virusImg = pygame.image.load('virus.png')
+virusX = 140
+virusY = 40
+virusX_change = 0
+
 def inj(X,Y):
     screen.blit(injImg,(X,Y))
+
+def virus(X,Y):
+    screen.blit(virusImg,(X,Y))
 
 #Game loop
 running = True
@@ -45,7 +55,15 @@ while running:
 
 
     screen.blit(background, (0, 0))
+
     injX += injX_change
+#Border
+    if injX <= 0:
+        injX = 0
+    elif injX >= 270:
+        injX = 270
+
     inj(injX,injY)
+    virus(virusX, virusY)
     pygame.display.update()
 
