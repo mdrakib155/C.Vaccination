@@ -29,14 +29,14 @@ virusY = random.randint(40, 140)
 virusX_change = 0.3
 virusY_change = 40
 
-#med
+#bullet
 
-medImg = pygame.image.load('med.png')
-medX = 0
-medY = 450
-medX_change = 0
-medY_change = 10
-med_state = "ready"
+bulletImg = pygame.image.load('bullet.png')
+bulletX = 0
+bulletY = 480
+bulletX_change = 0
+bulletY_change = 10
+bullet_state = "ready"
 
 def inj(X,Y):
     screen.blit(injImg,(X,Y))
@@ -44,12 +44,10 @@ def inj(X,Y):
 def virus(X,Y):
     screen.blit(virusImg,(X,Y))
 
-def fire_med(X,Y):
-    global med_state
-    med_state = "fire"
-    screen.blit(X + 16, Y + 10)
-
-
+def fire_bullet(X,Y):
+    global bullet_state
+    bullet_state = "fire"
+    screen.blit(bulletImg,(X+16 , Y+10))
 
 #Game loop
 running = True
@@ -67,9 +65,9 @@ while running:
             if event.key == pygame.K_RIGHT:
                 injX_change = 0.3
             if event.key == pygame.K_SPACE:
-                if med_state is "ready":
-                    medX = injX
-                    fire_med(medX, medY)
+                if bullet_state is "ready":
+                    bulletX = injX
+                    fire_bullet(bulletX, bulletY)
 
         if event.type == pygame.KEYUP:
             if event.key == pygame.K_LEFT or event.key == pygame.K_RIGHT:
@@ -92,10 +90,14 @@ while running:
     elif virusX >= 270:
         virusX_change = -0.3
         virusY += virusY_change
+#bullet movement
+    if bulletY <= 0:
+        bulletY = 480
+        bullet_state = "ready"
 
-    if med_state is "fire":
-        fire_med(medX, medY)
-        medY -= medY_change
+    if bullet_state is "fire":
+        fire_bullet(bulletX, bulletY)
+        bulletY -= bulletY_change
 
     inj(injX,injY)
     virus(virusX, virusY)
